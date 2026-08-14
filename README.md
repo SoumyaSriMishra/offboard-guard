@@ -6,7 +6,6 @@
 
 ## 🔗 Project Links
 
-- **Live Hosted Application**: [https://offboard-guard.netlify.app/](https://offboard-guard.netlify.app/)
 - **GitHub Repository**: [https://github.com/SoumyaSriMishra/offboard-guard.git](https://github.com/SoumyaSriMishra/offboard-guard.git)
 
 ---
@@ -104,7 +103,7 @@ graph TD
 ## 4. Setup & Running Instructions
 
 ### Step 1: Create a CognoDB Instance
-1. Go to [console.cognodb.com](https://console.cognodb.com) and create a free `c0` instance.
+1. Go to [consolecognodb.com](https://console.cognodb.com) and create a free `c0` instance.
 2. Copy the Bolt connection URI (`bolt+s://db-xxxxx.databases.cognodb.com`), username (`cognodb`), and password.
 
 ### Step 2: Configure Environment Variables
