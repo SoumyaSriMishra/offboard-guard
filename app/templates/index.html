@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — OffboardGuard{% endblock %}
+
+{% block content %}
+<div class="space-y-10">
+
+  <!-- Hero Header Section -->
+  <div class="text-center max-w-3xl mx-auto pt-4 pb-2">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-200 text-purple-700 text-xs font-semibold uppercase tracking-wider mb-4">
+      <span class="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
+      Graph-Native Permission Risk Engine
+    </div>
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-[#0B0B0F] tracking-tight leading-tight">
+      Stop <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-indigo-600">Ghost Access</span> before it becomes a breach.
+    </h1>
+    <p class="mt-4 text-lg text-gray-600 leading-relaxed">
+      OffboardGuard maps multi-hop permission chains across Slack, Okta, and AWS IAM to uncover inherited access paths that persist after employee departure.
+    </p>
+  </div>
+
+  <!-- 4-Column Stat Cards Grid (Wexa Numbered Eyebrows) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    
+    <!-- Card 01 -->
+    <div class="wexa-card p-6 flex flex-col justify-between">
+      <div>
+        <span class="eyebrow-accent">01</span>
+        <h3 class="text-sm font-semibold text-gray-500 mt-1">Total Identities</h3>
+      </div>
+      <div class="mt-4 flex items-baseline justify-between">
+        <span class="text-3xl font-black text-[#0B0B0F]">{{ stats.total_employees }}</span>
+        <span class="text-xs text-gray-500">{{ stats.active_employees }} Active</span>
+      </div>
+    </div>
+
+    <!-- Card 02 -->
+    <div class="wexa-card p-6 flex flex-col justify-between">
+      <div>
+        <span class="eyebrow-accent">02</span>
+        <h3 class="text-sm font-semibold text-gray-500 mt-1">Offboarded Employees</h3>
+      </div>
+      <div class="mt-4 flex items-baseline justify-between">
+        <span class="text-3xl font-black text-[#0B0B0F]">{{ stats.offboarded_employees }}</span>
+        <span class="text-xs text-amber-600 font-semibold">Under Audit</span>
+      </div>
+    </div>
+
+    <!-- Card 03 -->
+    <div class="wexa-card p-6 flex flex-col justify-between">
+      <div>
+        <span class="eyebrow-accent">03</span>
+        <h3 class="text-sm font-semibold text-gray-500 mt-1">Ghost Access Chains</h3>
+      </div>
+      <div class="mt-4 flex items-baseline justify-between">
+        <span class="text-3xl font-black text-red-600">{{ stats.ghost_chains_count }}</span>
+        <span class="text-xs px-2 py-0.5 rounded bg-red-100 text-red-700 font-bold">Action Required</span>
+      </div>
+    </div>
+
+    <!-- Card 04 -->
+    <div class="wexa-card p-6 flex flex-col justify-between">
+      <div>
+        <span class="eyebrow-accent">04</span>
+        <h3 class="text-sm font-semibold text-gray-500 mt-1">Exposed Prod Resources</h3>
+      </div>
+      <div class="mt-4 flex items-baseline justify-between">
+        <span class="text-3xl font-black text-purple-700">{{ stats.ghost_resources_count }}</span>
+        <span class="text-xs text-gray-500">Critical & High</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Flagship Ghost Access Detection Table -->
+  <div class="wexa-card p-6 shadow-sm">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-gray-200 gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <h2 class="text-xl font-bold text-[#0B0B0F]">Flagship Multi-Hop Ghost Access Findings</h2>
+          <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-50 text-red-700 border border-red-200">
+            Cypher Match (*1..6)
+          </span>
+        </div>
+        <p class="text-sm text-gray-500 mt-1">
+          Offboarded employees possessing reachable paths to production cloud resources through nested Slack/Okta/AWS roles.
+        </p>
+      </div>
+
+      <a href="/graph" class="btn-outline-pill px-4 py-2 text-xs self-start sm:self-auto inline-flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+        <span>View Full Network Graph</span>
+      </a>
+    </div>
+
+    <!-- Table Contents -->
+    <div class="overflow-x-auto mt-4">
+      {% if ghost_chains %}
+      <table class="w-full text-left text-sm">
+        <thead>
+          <tr class="border-b border-gray-200 text-xs uppercase font-semibold text-gray-500 tracking-wider">
+            <th class="py-3.5 px-4">Departed Employee</th>
+            <th class="py-3.5 px-4">Department</th>
+            <th class="py-3.5 px-4">Target Cloud Resource</th>
+            <th class="py-3.5 px-4 text-center">Sensitivity</th>
+            <th class="py-3.5 px-4 text-center">Hops</th>
+            <th class="py-3.5 px-4">Permission Chain</th>
+            <th class="py-3.5 px-4 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          {% for chain in ghost_chains %}
+          <tr class="hover:bg-gray-50/80 transition-colors">
+            <!-- Employee -->
+            <td class="py-4 px-4 font-semibold text-gray-900">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                <a href="/employees/{{ chain.employee_id }}" class="hover:text-purple-600 underline decoration-gray-300">
+                  {{ chain.employee_name }}
+                </a>
+              </div>
+              <div class="text-xs font-normal text-gray-400 pl-4">{{ chain.employee_email }}</div>
+            </td>
+
+            <!-- Department -->
+            <td class="py-4 px-4 text-gray-600">
+              {{ chain.department }}
+            </td>
+
+            <!-- Target Resource -->
+            <td class="py-4 px-4">
+              <span class="font-medium text-gray-900">{{ chain.resource_name }}</span>
+              <div class="text-xs text-gray-400">{{ chain.resource_type }} ({{ chain.environment }})</div>
+            </td>
+
+            <!-- Sensitivity Badge -->
+            <td class="py-4 px-4 text-center">
+              {% if chain.sensitivity == 'critical' %}
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">Critical</span>
+              {% elif chain.sensitivity == 'high' %}
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">High</span>
+              {% else %}
+              <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">{{ chain.sensitivity }}</span>
+              {% endif %}
+            </td>
+
+            <!-- Hop Count -->
+            <td class="py-4 px-4 text-center font-bold text-purple-700">
+              {{ chain.hops }} hops
+            </td>
+
+            <!-- Path Chain Nodes -->
+            <td class="py-4 px-4">
+              <div class="flex items-center gap-1.5 text-xs text-gray-600 flex-wrap max-w-md">
+                {% for node in chain.path_nodes %}
+                <span class="px-2 py-0.5 rounded bg-gray-100 border border-gray-200 font-mono text-[11px] text-gray-800">
+                  {{ node.name }}
+                </span>
+                {% if not loop.last %}
+                <span class="text-gray-400">→</span>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </td>
+
+            <!-- Action -->
+            <td class="py-4 px-4 text-right">
+              <a href="/employees/{{ chain.employee_id }}" class="btn-outline-pill px-3 py-1 text-xs">
+                Inspect Blast Radius
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <!-- Empty State -->
+      <div class="text-center py-12">
+        <svg class="w-12 h-12 text-gray-300 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <h3 class="text-base font-semibold text-gray-800">No Ghost Access Detected</h3>
+        <p class="text-sm text-gray-500 mt-1 max-w-md mx-auto">
+          {% if db_connected %}
+          No offboarded employees currently reach production resources. Run <code class="bg-gray-100 px-1 py-0.5 rounded">python scripts/seed_data.py --reset</code> to populate test scenarios.
+          {% else %}
+          The database is currently unreachable. Check your CognoDB settings in <code class="bg-gray-100 px-1 py-0.5 rounded">.env</code>.
+          {% endif %}
+        </p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

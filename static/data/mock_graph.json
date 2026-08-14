@@ -1,0 +1,418 @@
+{
+  "employees": [
+    {
+      "id": "emp-001",
+      "name": "Alex Rivera",
+      "email": "alex.rivera@wexa.ai",
+      "department": "Security",
+      "status": "offboarded",
+      "offboarded_at": "2026-03-15T10:00:00Z"
+    },
+    {
+      "id": "emp-002",
+      "name": "Sarah Chen",
+      "email": "sarah.chen@wexa.ai",
+      "department": "DevOps",
+      "status": "offboarded",
+      "offboarded_at": "2026-04-01T14:30:00Z"
+    },
+    {
+      "id": "emp-003",
+      "name": "David Kim",
+      "email": "david.kim@wexa.ai",
+      "department": "Engineering",
+      "status": "offboarded",
+      "offboarded_at": "2026-05-10T09:15:00Z"
+    },
+    {
+      "id": "emp-004",
+      "name": "Elena Rostova",
+      "email": "elena.rostova@wexa.ai",
+      "department": "Finance",
+      "status": "offboarded",
+      "offboarded_at": "2026-06-20T16:45:00Z"
+    },
+    {
+      "id": "emp-005",
+      "name": "Marcus Vance",
+      "email": "marcus.vance@wexa.ai",
+      "department": "Product",
+      "status": "offboarded",
+      "offboarded_at": "2026-07-05T11:20:00Z"
+    },
+    {
+      "id": "emp-006",
+      "name": "Rachel Adams",
+      "email": "rachel.adams@wexa.ai",
+      "department": "Security",
+      "status": "offboarded",
+      "offboarded_at": "2026-07-18T08:00:00Z"
+    },
+    {
+      "id": "emp-007",
+      "name": "Vikram Patel",
+      "email": "vikram.patel@wexa.ai",
+      "department": "DevOps",
+      "status": "offboarded",
+      "offboarded_at": "2026-08-01T13:10:00Z"
+    },
+    {
+      "id": "emp-008",
+      "name": "Jessica Taylor",
+      "email": "jessica.taylor@wexa.ai",
+      "department": "HR",
+      "status": "offboarded",
+      "offboarded_at": "2026-01-15T09:00:00Z"
+    },
+    {
+      "id": "emp-010",
+      "name": "Jordan Lee",
+      "email": "jordan.lee@wexa.ai",
+      "department": "Engineering",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-011",
+      "name": "Morgan Smith",
+      "email": "morgan.smith@wexa.ai",
+      "department": "DevOps",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-012",
+      "name": "Taylor Wong",
+      "email": "taylor.wong@wexa.ai",
+      "department": "Security",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-013",
+      "name": "Chris Martinez",
+      "email": "chris.martinez@wexa.ai",
+      "department": "Product",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-014",
+      "name": "Sam Gupta",
+      "email": "sam.gupta@wexa.ai",
+      "department": "Engineering",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-015",
+      "name": "Pat Johnson",
+      "email": "pat.johnson@wexa.ai",
+      "department": "Finance",
+      "status": "active",
+      "offboarded_at": null
+    },
+    {
+      "id": "emp-016",
+      "name": "Casey Wright",
+      "email": "casey.wright@wexa.ai",
+      "department": "HR",
+      "status": "active",
+      "offboarded_at": null
+    }
+  ],
+  "slack_groups": [
+    {
+      "id": "sg-01",
+      "name": "secops-lead"
+    },
+    {
+      "id": "sg-02",
+      "name": "platform-infra"
+    },
+    {
+      "id": "sg-03",
+      "name": "data-eng"
+    },
+    {
+      "id": "sg-04",
+      "name": "billing-admins"
+    },
+    {
+      "id": "sg-05",
+      "name": "incident-response"
+    },
+    {
+      "id": "sg-06",
+      "name": "eng-all"
+    },
+    {
+      "id": "sg-07",
+      "name": "devops-core"
+    }
+  ],
+  "okta_groups": [
+    {
+      "id": "og-01",
+      "name": "okta-secops-lead"
+    },
+    {
+      "id": "og-02",
+      "name": "okta-devops-core"
+    },
+    {
+      "id": "og-03",
+      "name": "okta-data-eng"
+    },
+    {
+      "id": "og-04",
+      "name": "okta-billing-admins"
+    },
+    {
+      "id": "og-05",
+      "name": "okta-shadow-devs"
+    },
+    {
+      "id": "og-06",
+      "name": "okta-eng-all"
+    }
+  ],
+  "aws_roles": [
+    {
+      "id": "ar-01",
+      "name": "ProductionAdmin",
+      "arn": "arn:aws:iam::123456789012:role/ProductionAdmin"
+    },
+    {
+      "id": "ar-02",
+      "name": "EC2ClusterAdmin",
+      "arn": "arn:aws:iam::123456789012:role/EC2ClusterAdmin"
+    },
+    {
+      "id": "ar-03",
+      "name": "S3DataVaultAccess",
+      "arn": "arn:aws:iam::123456789012:role/S3DataVaultAccess"
+    },
+    {
+      "id": "ar-04",
+      "name": "BillingVaultAccess",
+      "arn": "arn:aws:iam::123456789012:role/BillingVaultAccess"
+    },
+    {
+      "id": "ar-05",
+      "name": "CustomerDataReadWrite",
+      "arn": "arn:aws:iam::123456789012:role/CustomerDataReadWrite"
+    }
+  ],
+  "cloud_resources": [
+    {
+      "id": "cr-01",
+      "name": "prod-auth-secrets-kms",
+      "type": "kms_key",
+      "environment": "production",
+      "sensitivity": "critical"
+    },
+    {
+      "id": "cr-02",
+      "name": "prod-kubernetes-control-plane",
+      "type": "ec2_instance",
+      "environment": "production",
+      "sensitivity": "high"
+    },
+    {
+      "id": "cr-03",
+      "name": "prod-user-pii-bucket",
+      "type": "s3_bucket",
+      "environment": "production",
+      "sensitivity": "critical"
+    },
+    {
+      "id": "cr-04",
+      "name": "prod-financial-transactions-db",
+      "type": "rds_instance",
+      "environment": "production",
+      "sensitivity": "critical"
+    },
+    {
+      "id": "cr-05",
+      "name": "prod-billing-db",
+      "type": "rds_instance",
+      "environment": "production",
+      "sensitivity": "high"
+    },
+    {
+      "id": "cr-06",
+      "name": "prod-audit-logs-bucket",
+      "type": "s3_bucket",
+      "environment": "production",
+      "sensitivity": "high"
+    },
+    {
+      "id": "cr-07",
+      "name": "staging-test-bucket",
+      "type": "s3_bucket",
+      "environment": "staging",
+      "sensitivity": "medium"
+    },
+    {
+      "id": "cr-08",
+      "name": "dev-sandbox-ec2",
+      "type": "ec2_instance",
+      "environment": "dev",
+      "sensitivity": "low"
+    }
+  ],
+  "emp_slack": [
+    {
+      "emp_id": "emp-001",
+      "slack_id": "sg-01",
+      "since": "2024-01-10",
+      "active": true
+    },
+    {
+      "emp_id": "emp-002",
+      "slack_id": "sg-02",
+      "since": "2024-02-15",
+      "active": true
+    },
+    {
+      "emp_id": "emp-003",
+      "slack_id": "sg-03",
+      "since": "2024-03-01",
+      "active": true
+    },
+    {
+      "emp_id": "emp-004",
+      "slack_id": "sg-04",
+      "since": "2024-04-12",
+      "active": true
+    },
+    {
+      "emp_id": "emp-006",
+      "slack_id": "sg-05",
+      "since": "2024-05-20",
+      "active": true
+    },
+    {
+      "emp_id": "emp-010",
+      "slack_id": "sg-06",
+      "since": "2025-01-05",
+      "active": true
+    },
+    {
+      "emp_id": "emp-011",
+      "slack_id": "sg-07",
+      "since": "2025-02-10",
+      "active": true
+    }
+  ],
+  "slack_okta": [
+    {
+      "slack_id": "sg-01",
+      "okta_id": "og-01",
+      "synced_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "slack_id": "sg-02",
+      "okta_id": "og-02",
+      "synced_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "slack_id": "sg-03",
+      "okta_id": "og-03",
+      "synced_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "slack_id": "sg-04",
+      "okta_id": "og-04",
+      "synced_at": "2026-01-01T00:00:00Z"
+    },
+    {
+      "slack_id": "sg-05",
+      "okta_id": "og-01",
+      "synced_at": "2026-01-01T00:00:00Z"
+    }
+  ],
+  "emp_okta": [
+    {
+      "emp_id": "emp-005",
+      "okta_id": "og-05",
+      "since": "2024-06-01",
+      "active": true
+    }
+  ],
+  "okta_role": [
+    {
+      "okta_id": "og-01",
+      "role_id": "ar-01",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "okta_id": "og-02",
+      "role_id": "ar-02",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "okta_id": "og-03",
+      "role_id": "ar-03",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "okta_id": "og-04",
+      "role_id": "ar-04",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "okta_id": "og-05",
+      "role_id": "ar-05",
+      "granted_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "role_resource": [
+    {
+      "role_id": "ar-01",
+      "resource_id": "cr-01",
+      "access_level": "admin",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "role_id": "ar-01",
+      "resource_id": "cr-05",
+      "access_level": "write",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "role_id": "ar-02",
+      "resource_id": "cr-02",
+      "access_level": "admin",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "role_id": "ar-03",
+      "resource_id": "cr-03",
+      "access_level": "admin",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "role_id": "ar-04",
+      "resource_id": "cr-04",
+      "access_level": "write",
+      "granted_at": "2024-01-01T00:00:00Z"
+    },
+    {
+      "role_id": "ar-05",
+      "resource_id": "cr-03",
+      "access_level": "read",
+      "granted_at": "2024-01-01T00:00:00Z"
+    }
+  ],
+  "emp_direct": [
+    {
+      "emp_id": "emp-007",
+      "resource_id": "cr-02",
+      "access_level": "admin",
+      "granted_at": "2024-01-10T00:00:00Z",
+      "revoked_at": null
+    }
+  ]
+}

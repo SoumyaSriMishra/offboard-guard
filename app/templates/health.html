@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}System Health — OffboardGuard{% endblock %}
+
+{% block content %}
+<div class="space-y-8 max-w-4xl mx-auto">
+
+  <!-- Header -->
+  <div class="text-center space-y-2">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2 {% if db_connected %}bg-emerald-50 text-emerald-700 border border-emerald-200{% else %}bg-amber-50 text-amber-700 border border-amber-200{% endif %}">
+      <span class="w-2 h-2 rounded-full {% if db_connected %}bg-emerald-500 animate-pulse{% else %}bg-amber-500{% endif %}"></span>
+      System Status: {{ "Operational & Connected" if db_connected else "Degraded (Offline Demo Mode)" }}
+    </div>
+    <h1 class="text-3xl font-black text-[#0B0B0F]">System Health & Diagnostics</h1>
+    <p class="text-sm text-gray-500 max-w-lg mx-auto">Real-time status of backend API routes, database drivers, and graph query engines.</p>
+  </div>
+
+  <!-- Status Cards Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Database Connection Card -->
+    <div class="wexa-card p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl {% if db_connected %}bg-emerald-50 text-emerald-600{% else %}bg-amber-50 text-amber-600{% endif %} flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-sm">CognoDB Graph Database</h3>
+            <span class="text-xs text-gray-400">Bolt Protocol Engine</span>
+          </div>
+        </div>
+        {% if db_connected %}
+        <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Connected</span>
+        {% else %}
+        <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800">Offline Fallback</span>
+        {% endif %}
+      </div>
+
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex justify-between py-1 border-b border-gray-50">
+          <span class="text-gray-400">Driver Protocol:</span>
+          <span class="font-mono text-gray-800">neo4j official driver (bolt+s)</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-gray-50">
+          <span class="text-gray-400">Target Endpoint:</span>
+          <span class="font-mono text-gray-800 truncate max-w-[200px]">{{ db_uri }}</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-gray-400">Query Engine Mode:</span>
+          <span class="font-semibold text-purple-700">{{ "Live Cypher Queries" if db_connected else "Local Seed Dataset Evaluation" }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Web Application Engine Card -->
+    <div class="wexa-card p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center shrink-0">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+          <div>
+            <h3 class="font-bold text-gray-900 text-sm">FastAPI + Uvicorn ASGI</h3>
+            <span class="text-xs text-gray-400">Web Application Framework</span>
+          </div>
+        </div>
+        <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800">Active</span>
+      </div>
+
+      <div class="space-y-2 text-xs text-gray-600">
+        <div class="flex justify-between py-1 border-b border-gray-50">
+          <span class="text-gray-400">Framework Version:</span>
+          <span class="font-mono text-gray-800">FastAPI 0.141.1</span>
+        </div>
+        <div class="flex justify-between py-1 border-b border-gray-50">
+          <span class="text-gray-400">Templating Engine:</span>
+          <span class="font-mono text-gray-800">Jinja2 Server-Rendered</span>
+        </div>
+        <div class="flex justify-between py-1">
+          <span class="text-gray-400">Frontend Styling:</span>
+          <span class="font-mono text-gray-800">Tailwind CSS + Wexa Tokens</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Raw JSON Output Drawer -->
+  <div class="wexa-card p-6 space-y-3">
+    <div class="flex items-center justify-between">
+      <h3 class="text-sm font-bold text-gray-900">Raw JSON API Payload (`/health?format=json`)</h3>
+      <a href="/health?format=json" target="_blank" class="text-xs font-semibold text-purple-600 hover:underline">
+        Open Raw JSON Endpoint →
+      </a>
+    </div>
+
+    <pre class="bg-gray-900 text-emerald-400 p-4 rounded-xl text-xs font-mono overflow-x-auto"><code>{
+  "status": "{{ 'healthy' if db_connected else 'degraded' }}",
+  "database_connected": {{ 'true' if db_connected else 'false' }},
+  "message": "{{ 'CognoDB connection active' if db_connected else 'CognoDB is unreachable or disconnected' }}"
+}</code></pre>
+  </div>
+
+</div>
+{% endblock %}

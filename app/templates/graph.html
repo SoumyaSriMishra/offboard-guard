@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Graph Explorer — OffboardGuard{% endblock %}
+
+{% block content %}
+<div class="space-y-6">
+
+  <!-- Header & Toolbar -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div>
+      <h1 class="text-3xl font-black text-[#0B0B0F]">Interactive Permission Graph Canvas</h1>
+      <p class="text-sm text-gray-500 mt-1">Explore complete multi-hop organizational graph topologies and node relationships.</p>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex items-center gap-3">
+      <button onclick="explorer.fit()" class="btn-outline-pill px-4 py-2 text-xs">Reset View</button>
+      <button onclick="explorer.togglePhysics(true)" class="btn-outline-pill px-4 py-2 text-xs">Stabilize Layout</button>
+    </div>
+  </div>
+
+  <!-- Main Canvas Card -->
+  <div class="wexa-card p-6 shadow-sm space-y-4">
+
+    <!-- Node Type Layer Filter Toggles -->
+    <div class="flex items-center gap-4 py-3 px-4 bg-gray-50/80 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 flex-wrap">
+      <span class="text-gray-400 uppercase tracking-wider text-[11px]">Layer Filters:</span>
+
+      <label class="flex items-center gap-1.5 cursor-pointer">
+        <input type="checkbox" checked onchange="explorer.toggleFilter('Employee', this.checked)" class="rounded text-purple-600 focus:ring-purple-500">
+        <span>Employees</span>
+      </label>
+
+      <label class="flex items-center gap-1.5 cursor-pointer">
+        <input type="checkbox" checked onchange="explorer.toggleFilter('SlackGroup', this.checked)" class="rounded text-purple-600 focus:ring-purple-500">
+        <span>Slack Groups</span>
+      </label>
+
+      <label class="flex items-center gap-1.5 cursor-pointer">
+        <input type="checkbox" checked onchange="explorer.toggleFilter('OktaGroup', this.checked)" class="rounded text-purple-600 focus:ring-purple-500">
+        <span>Okta Groups</span>
+      </label>
+
+      <label class="flex items-center gap-1.5 cursor-pointer">
+        <input type="checkbox" checked onchange="explorer.toggleFilter('AWSRole', this.checked)" class="rounded text-purple-600 focus:ring-purple-500">
+        <span>AWS Roles</span>
+      </label>
+
+      <label class="flex items-center gap-1.5 cursor-pointer">
+        <input type="checkbox" checked onchange="explorer.toggleFilter('CloudResource', this.checked)" class="rounded text-purple-600 focus:ring-purple-500">
+        <span>Cloud Resources</span>
+      </label>
+    </div>
+
+    <!-- Canvas Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      
+      <!-- Graph Canvas Container (3 cols) -->
+      <div class="lg:col-span-3 bg-white border border-gray-200 rounded-xl relative overflow-hidden" style="height: 600px;">
+        <div id="full-graph-canvas" class="w-full h-full"></div>
+        <div id="graph-loading" class="absolute inset-0 bg-white/80 backdrop-blur-sm flex items-center justify-center text-sm font-semibold text-gray-600">
+          <div class="flex items-center gap-2">
+            <svg class="animate-spin h-5 w-5 text-purple-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+            Fetching Graph Topology from CognoDB...
+          </div>
+        </div>
+      </div>
+
+      <!-- Node Detail Inspector Drawer (1 col) -->
+      <div class="bg-gray-50/70 border border-gray-200 rounded-xl p-5 space-y-4 flex flex-col justify-between" style="height: 600px;">
+        <div>
+          <h3 class="text-xs uppercase font-bold text-gray-400 tracking-wider">Node Details</h3>
+          <div id="graph-node-inspector" class="mt-3 text-xs text-gray-600 space-y-3">
+            <p class="italic text-gray-400">Select any node on the graph canvas to inspect its permissions and hop attributes.</p>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-4 space-y-2 text-xs">
+          <span class="font-bold text-gray-700 block">Graph Key</span>
+          <div class="space-y-1.5 text-[11px]">
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Offboarded Identity</span>
+              <span class="w-3 h-3 rounded-full bg-red-100 border border-red-600"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Active Identity</span>
+              <span class="w-3 h-3 rounded-full bg-blue-100 border border-blue-600"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Slack Group</span>
+              <span class="w-3 h-3 rounded-full bg-purple-100 border border-purple-600"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Okta Group</span>
+              <span class="w-3 h-3 rounded bg-indigo-100 border border-indigo-600"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">AWS Role</span>
+              <span class="w-3 h-3 bg-amber-100 border border-amber-600" style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"></span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-500">Critical Resource</span>
+              <span class="w-3 h-3 rounded-full bg-red-200 border-2 border-red-800"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="/static/js/graph.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', async () => {
+    const loadingEl = document.getElementById('graph-loading');
+    const explorer = new OffboardGraphExplorer('full-graph-canvas', {
+      onNodeSelect: (node) => {
+        const inspector = document.getElementById('graph-node-inspector');
+        if (!node) return;
+        inspector.innerHTML = `
+          <div class="bg-white p-4 rounded-lg border border-gray-200 space-y-2 shadow-sm">
+            <div>
+              <span class="text-[10px] font-bold uppercase text-purple-700 px-1.5 py-0.5 rounded bg-purple-50 border border-purple-200">${node.type}</span>
+              <h4 class="text-sm font-bold text-gray-900 mt-1">${node.name || node.id}</h4>
+            </div>
+            ${node.sensitivity ? `<div><span class="font-semibold text-gray-500">Sensitivity:</span> <span class="font-bold text-red-600 uppercase">${node.sensitivity}</span></div>` : ''}
+            ${node.environment ? `<div><span class="font-semibold text-gray-500">Environment:</span> ${node.environment}</div>` : ''}
+            ${node.department ? `<div><span class="font-semibold text-gray-500">Department:</span> ${node.department}</div>` : ''}
+            ${node.status ? `<div><span class="font-semibold text-gray-500">Status:</span> ${node.status}</div>` : ''}
+            <div class="text-[11px] text-gray-400 font-mono pt-2 border-t border-gray-100">ID: ${node.id}</div>
+          </div>
+        `;
+      }
+    });
+    window.explorer = explorer;
+
+    try {
+      const res = await fetch('/api/graph/ghost-access');
+      const data = await res.json();
+      loadingEl.classList.add('hidden');
+      explorer.loadData(data);
+    } catch (err) {
+      loadingEl.innerHTML = `<div class="text-red-600 text-sm">Failed to load graph data. ${err.message}</div>`;
+    }
+  });
+</script>
+{% endblock %}

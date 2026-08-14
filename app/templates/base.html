@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}OffboardGuard — Graph Permission & Offboarding Analyzer{% endblock %}</title>
+  <meta name="description" content="OffboardGuard analyzes inherited graph permissions and detects ghost access risk for offboarded employees.">
+  
+  <!-- Favicon Links using User Provided Wexa Icon -->
+  <link rel="icon" type="image/svg+xml" href="/static/img/wexa-icon.svg">
+  <link rel="shortcut icon" href="/static/img/wexa-icon.svg">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tokens CSS -->
+  <link rel="stylesheet" href="/static/css/tokens.css">
+
+  <!-- vis-network CDN -->
+  <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="min-h-screen flex flex-col bg-[#FAFAFC] text-gray-900 antialiased bg-dot-grid">
+
+  <!-- Wexa Navbar Shell -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo Left with User Provided Wexa Icon -->
+      <a href="/" class="flex items-center gap-3 group">
+        <img src="/static/img/wexa-icon.svg" alt="Wexa Logo" class="w-7 h-7 text-[#0B0B0F] transition-transform group-hover:scale-105">
+        <span class="text-xl font-black tracking-tight text-[#0B0B0F]">WEXA</span>
+        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-purple-100 text-purple-700 border border-purple-200">OffboardGuard</span>
+      </a>
+
+      <!-- Navigation Links Center -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium">
+        <a href="/" class="text-gray-600 hover:text-[#0B0B0F] transition-colors">Dashboard</a>
+        <a href="/employees" class="text-gray-600 hover:text-[#0B0B0F] transition-colors">Employees</a>
+        <a href="/graph" class="text-gray-600 hover:text-[#0B0B0F] transition-colors">Graph Explorer</a>
+        <a href="/health" class="text-gray-600 hover:text-[#0B0B0F] transition-colors">System Health</a>
+      </nav>
+
+      <!-- Action Buttons Right -->
+      <div class="flex items-center gap-4">
+        <a href="/graph" class="hidden sm:inline-block text-sm font-medium text-gray-600 hover:text-gray-900">Live Explorer</a>
+        <a href="/graph" class="btn-black-pill px-5 py-2 text-sm shadow-sm inline-flex items-center gap-2">
+          <span>Run Analyzer</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Database Connection Failure / Warning Banner -->
+  {% if not db_connected %}
+  <div class="bg-amber-50 border-b border-amber-200 text-amber-900 px-4 py-3 text-sm flex items-center justify-between">
+    <div class="max-w-7xl mx-auto w-full flex items-center gap-3">
+      <svg class="w-5 h-5 text-amber-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      <div>
+        <span class="font-bold">Database Warning:</span> {{ error_message or "CognoDB database is unreachable. App is running in offline/demonstration mode." }}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Main Content -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Wexa Footer -->
+  <footer class="bg-white border-t border-gray-200 mt-auto py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-gray-500 gap-4">
+      <div class="flex items-center gap-2">
+        <img src="/static/img/wexa-icon.svg" alt="Wexa" class="w-4 h-4 opacity-75">
+        <span>&copy; 2026 OffboardGuard by Wexa AI. Graph Permission Intelligence.</span>
+      </div>
+      <div class="flex items-center gap-6">
+        <a href="https://www.wexa.ai/" target="_blank" class="hover:text-gray-900 transition-colors">Wexa Homepage</a>
+        <a href="/health" class="hover:text-gray-900 transition-colors">Health API</a>
+        <a href="/graph" class="hover:text-gray-900 transition-colors">Graph Canvas</a>
+      </div>
+    </div>
+  </footer>
+
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
