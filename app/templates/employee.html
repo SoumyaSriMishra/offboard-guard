@@ -41,8 +41,8 @@
         <span class="font-medium text-gray-800">{{ employee.offboarded_at or 'N/A (Active)' }}</span>
       </div>
       <div class="border-l border-gray-200 pl-6">
-        <span class="text-xs text-gray-400 block uppercase font-semibold">Reachable Resources</span>
-        <span class="font-bold text-purple-700 text-lg">{{ blast_radius.nodes | length - 1 if blast_radius and blast_radius.nodes else 0 }} nodes</span>
+        <span class="text-xs text-gray-400 block uppercase font-semibold">Reachable Topology</span>
+        <span class="font-bold text-purple-700 text-lg">{{ blast_radius.nodes | length if blast_radius and blast_radius.nodes else 1 }} nodes</span>
       </div>
     </div>
   </div>
@@ -117,11 +117,11 @@
 {% endblock %}
 
 {% block extra_scripts %}
-{% if blast_radius %}
+{% if employee %}
 <script src="/static/js/graph.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const rawData = {{ blast_radius | tojson }};
+  document.addEventListener('DOMContentLoaded', async () => {
+    const employeeId = "{{ employee.id }}";
     const explorer = new OffboardGraphExplorer('blast-radius-canvas', {
       onNodeSelect: (node) => {
         const inspector = document.getElementById('node-inspector-content');
@@ -142,7 +142,14 @@
       }
     });
     window.explorer = explorer;
-    explorer.loadData(rawData);
+
+    try {
+      const res = await fetch(`/api/employees/${employeeId}/blast-radius`);
+      const data = await res.json();
+      explorer.loadData(data);
+    } catch (err) {
+      console.error('Failed to load blast radius graph:', err);
+    }
   });
 </script>
 {% endif %}

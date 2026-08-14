@@ -11,6 +11,25 @@
 
 ---
 
+## 📸 Application Screenshots
+
+### 📊 Dashboard & Flagship Ghost Access Findings
+![Dashboard View](./static/img/screenshots/1.dashboard_view.png)
+
+### 👥 Employees Directory & Risk Filters
+![Employee Directory](./static/img/screenshots/2.employee_id.png)
+
+### 👤 Employee Profile & Blast Radius Inspector
+![Employee Data Check](./static/img/screenshots/3.employee_data_check.png)
+
+### 🌐 Inherited Access Blast Radius Graph Topology
+![Employee Asset Graph View](./static/img/screenshots/4.emp_asset_graph_view.png)
+
+### 🕸️ Vis-Network Interactive Network Graph Explorer
+![Graph Explorer View](./static/img/screenshots/5.graph_view.png)
+
+---
+
 ## 1. Domain Problem & Use Case
 
 When an employee leaves an organization, IT administrators revoke their *direct* accounts and identity access. However, in modern cloud-native enterprises, permissions are almost never granted directly. Instead, access cascades through multi-hop inherited structures: an employee joins a Slack channel, which is automatically mirrored to an Okta group, which assumes an AWS IAM role, which provides read/write access to a production S3 bucket or RDS database.
